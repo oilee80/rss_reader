@@ -69,19 +69,31 @@ class RSSReader extends Record {
 			$xPath = new DOMXPath($dom);
 			$news_items = $xPath->query('//item');
 			$feed_data = array();
-			$feed_data['meta']['title'] = $xPath->query('//title')->item(0)->textContent;
-			$feed_data['meta']['link'] = $xPath->query('//link')->item(0)->textContent;
-			$feed_data['meta']['description'] = $xPath->query('//description')->item(0)->textContent;
-			$feed_data['meta']['language'] = $xPath->query('//language')->item(0)->textContent;
-			$feed_data['meta']['lastBuildDate'] = $xPath->query('//lastBuildDate')->item(0)->textContent;
-			$feed_data['meta']['copyright'] = $xPath->query('//copyright')->item(0)->textContent;
-			$feed_data['meta']['atom:link'] = $xPath->query('//atom:link')->item(0)->attributes->getNamedItem('href')->textContent;
+			$items = $xPath->query('//title');
+			$feed_data['meta']['title'] = ($items->length == 0) ? null : $items->item(0)->textContent;
+			$items = $xPath->query('//link');
+			$feed_data['meta']['link'] = ($items->length == 0) ? null : $items->item(0)->textContent;
+			$items = $xPath->query('//description');
+			$feed_data['meta']['description'] = ($items->length == 0) ? null : $items->item(0)->textContent;
+			$items = $xPath->query('//language');
+			$feed_data['meta']['language'] = ($items->length == 0) ? null : $items->item(0)->textContent;
+			$items = $xPath->query('//lastBuildDate');
+			$feed_data['meta']['lastBuildDate'] = ($items->length == 0) ? null : $items->item(0)->textContent;
+			$items = $xPath->query('//copyright');
+			$feed_data['meta']['copyright'] = ($items->length == 0) ? null : $items->item(0)->textContent;
+			$items = $xPath->query('//link');
+			$feed_data['meta']['atom:link'] = ($items->length == 0) ? null : $items->item(0)->attributes->getNamedItem('href')->textContent;
 
-			$feed_data['meta']['image']['url'] = $xPath->query('//image/url')->item(0)->textContent;
-			$feed_data['meta']['image']['title'] = $xPath->query('//image/title')->item(0)->textContent;
-			$feed_data['meta']['image']['link'] = $xPath->query('//image/link')->item(0)->textContent;
-			$feed_data['meta']['image']['width'] = $xPath->query('//image/width')->item(0)->textContent;
-			$feed_data['meta']['image']['height'] = $xPath->query('//image/height')->item(0)->textContent;
+			$items = $xPath->query('//image/url');
+			$feed_data['meta']['image']['url'] = ($items->length == 0) ? null : $items->item(0)->textContent;
+			$items = $xPath->query('//image/title');
+			$feed_data['meta']['image']['title'] = ($items->length == 0) ? null : $items->item(0)->textContent;
+			$items = $xPath->query('//image/link');
+			$feed_data['meta']['image']['link'] = ($items->length == 0) ? null : $items->item(0)->textContent;
+			$items = $xPath->query('//image/width');
+			$feed_data['meta']['image']['width'] = ($items->length == 0) ? null : $items->item(0)->textContent;
+			$items = $xPath->query('//image/height');
+			$feed_data['meta']['image']['height'] = ($items->length == 0) ? null : $items->item(0)->textContent;
 
 //			$feed_data['meta']['title'] = $xPath->query('//title')->item(0)->textContent;
 			foreach($news_items As $i => $item) {
